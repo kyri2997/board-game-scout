@@ -10,6 +10,7 @@ export default function ResultsPage({ answers, handleRestart }) {
 
   const [isAppending, setIsAppending] = useState(false);
   const [previousAiIds, setPreviousAiIds] = useState([]);
+  const hasFetched = useRef(false);
 
   
 
@@ -28,18 +29,20 @@ export default function ResultsPage({ answers, handleRestart }) {
     });
     setIsLoading(false);
   };
+
   useEffect(() => {
     const fetchInitial = async () => {
       setIsLoading(true);
-      const initial = await getGameRecommendations(answers); // now an array ✅
-      console.log(initial)
+      const initial = await getGameRecommendations(answers);
       const enriched = await fetchBGGData(initial);
       setSuggestedGames(enriched);
-      setPreviousAiIds(initial.map(g => g.id));
       setIsLoading(false);
     };
-  
-    if (answers) fetchInitial();
+
+    if (answers && !hasFetched.current) {
+      hasFetched.current = true; // ✅ only allow once
+      fetchInitial();
+    }
   }, [answers]);
 
   const loadMore = async () => {
@@ -172,9 +175,9 @@ export default function ResultsPage({ answers, handleRestart }) {
     { label: "Message", value: message }
   ].filter(item => item.value);
 }
+const summary = formatAnswers(answers);
 
   if (isLoading) {
-    const summary = formatAnswers(answers);
 
     return (
       <div
@@ -185,10 +188,10 @@ export default function ResultsPage({ answers, handleRestart }) {
     >
 
       <div className="flex flex-col items-center justify-center p-10 text-center space-y-4">
-       <div className="absolute inset-0 bg-black/60 z-0" />
+       {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
         <div className="dice animate-roll" />
-        <p className="text-xl font-semibold text-white">Rolling the dice...</p>
-        <p className="text-white">Finding your perfect games (this can take about 20 seconds)</p>
+        <p className="text-xl font-bold text-white">Rolling the dice...</p>
+        <p className="text-white font-bold">Finding your perfect games (this can take about 20 seconds)</p>
       
       {/* User summary */}
       <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
@@ -213,6 +216,18 @@ export default function ResultsPage({ answers, handleRestart }) {
             <div className="flex justify-between" >
             <h1 className="text-3xl font-bold">Your Game Recommendations</h1>
                   <Button onClick={handleRestart}>🔄 Start Again</Button>
+             {/* User summary */}
+          <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
+            </div>
+            <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
+            <h3 className="font-bold mb-2">Your selections:</h3>
+            <ul className="space-y-1 text-sm text-gray-700">
+              {summary.map((item, i) => (
+                <li key={i}>
+                  <strong>{item.label}:</strong> {item.value}
+                </li>
+              ))}
+            </ul>
             </div>
 
        {/* Suggested game results  */}
