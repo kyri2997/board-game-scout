@@ -175,8 +175,8 @@ export default function ResultsPage({ answers, handleRestart }) {
     { label: "Message", value: message }
   ].filter(item => item.value);
 }
-const summary = formatAnswers(answers);
 
+const summary = formatAnswers(answers);
   if (isLoading) {
 
     return (
@@ -216,18 +216,19 @@ const summary = formatAnswers(answers);
             <div className="flex justify-between" >
             <h1 className="text-3xl font-bold">Your Game Recommendations</h1>
                   <Button onClick={handleRestart}>🔄 Start Again</Button>
-             {/* User summary */}
-          <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
+                  
             </div>
-            <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
-            <h3 className="font-bold mb-2">Your selections:</h3>
-            <ul className="space-y-1 text-sm text-gray-700">
-              {summary.map((item, i) => (
-                <li key={i}>
-                  <strong>{item.label}:</strong> {item.value}
-                </li>
-              ))}
-            </ul>
+
+            {/* // User summary */}
+            <div className="grid-cols-1 md:grid-cols-2 bg-white p-4 rounded shadow w-full mx-auto text-left">
+              <h3 className="font-bold mb-2">Your selections:</h3>
+              <ul className="space-y-1 text-sm text-gray-700">
+                {summary.map((item, i) => (
+                  <li key={i}>
+                    <strong>{item.label}:</strong> {item.value}
+                  </li>
+                ))}
+              </ul>
             </div>
 
        {/* Suggested game results  */}
