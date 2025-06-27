@@ -1,0 +1,93 @@
+Results Page
+
+
+  //Filter states/refs
+  // const [filters, setFilters] = useState({
+  //   complexity: "same",
+  //   players: "same",
+  //   categories: "same",
+  //   mechanics: "same"
+  // });
+  // const [isAppending, setIsAppending] = useState(false);
+  // const bottomRef = useRef(null);
+
+  // pull recommendations → enrich → state (includes filter logic)
+
+  // const fetchAndDisplay = async (extraFilters = {}) => {
+  //   try {
+  //     // Combine base answers with any filters (initially this may just be {})
+  //     const fullPrompt = buildPromptFromAnswersAndFilters(answers, extraFilters);
+  
+  //     setIsLoading(true); // or setIsAppending if you want a separate visual state for filters
+  
+  //     const recs = await getClaudeRecommendations(fullPrompt);
+  //     const enriched = await fetchBGGData(recs.slice(0, 3)); // Or however many you want
+  
+  //     setSuggestedGames((prev) => [...prev, ...enriched]);
+  //   } catch (err) {
+  //     console.error("Error fetching and displaying recommendations:", err);
+  //   } finally {
+  //     setIsLoading(false); // or setIsAppending(false) if split
+  //   }
+  // };
+
+  from the return
+
+      {/* Filters */}
+        {/* <div className="flex flex-wrap gap-4 items-center border p-4 rounded bg-gray-50">
+          <span className="font-medium">Suggest more games with...</span>
+          <br />
+
+          <select
+            value={filters.complexity}
+            onChange={(e) => setFilters(prev => ({ ...prev, complexity: e.target.value }))}
+            className="border p-1 rounded"
+          >
+            <option value="higher">higher</option>
+            <option value="same">same</option>
+            <option value="lower">lower</option>
+          </select>
+          <span>complexity, </span>
+
+          <select
+            value={filters.players}
+            onChange={(e) => setFilters(prev => ({ ...prev, players: e.target.value }))}
+            className="border p-1 rounded"
+          >
+            <option value="more">more</option>
+            <option value="same">same</option>
+            <option value="less">less</option>
+          </select>
+          <span>players, </span>
+
+          <select
+            value={filters.categories}
+            onChange={(e) => setFilters(prev => ({ ...prev, categories: e.target.value }))}
+            className="border p-1 rounded"
+          >
+            <option value="same">same</option>
+            <option value="different">different</option>
+          </select>
+          <span>categories, </span>
+
+          <select
+            value={filters.mechanics}
+            onChange={(e) => setFilters(prev => ({ ...prev, mechanics: e.target.value }))}
+            className="border p-1 rounded"
+          >
+            <option value="same">same</option>
+            <option value="different">different</option>
+          </select>
+          <span>mechanics</span>
+
+          <Button onClick={() => applyFilters()} className="ml-auto">
+            🔁 Apply Filters
+          </Button>
+      </div>
+
+              {isAppending && (
+          <div className="text-center text-sm text-gray-500 my-4">
+            Loading more games...
+          </div>
+        )} */}
+       
