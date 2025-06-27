@@ -161,7 +161,7 @@ export default function ResultsPage({ answers, handleRestart }) {
     } = answers
   return [
     { label: "Type", value: type },
-    { label: "Complexity out of 5", value: weight },
+    { label: "Complexity (out of 5)", value: weight },
     { label: "Player Count", value: playerCount },
     { label: "Max Playtime", value: `${maxPlaytime} min` },
     { label: "Category", value: category },
@@ -220,16 +220,17 @@ const summary = formatAnswers(answers);
             </div>
 
             {/* // User summary */}
-            <div className="grid-cols-1 md:grid-cols-2 bg-white p-4 rounded shadow w-full mx-auto text-left">
-              <h3 className="font-bold mb-2">Your selections:</h3>
-              <ul className="space-y-1 text-sm text-gray-700">
-                {summary.map((item, i) => (
-                  <li key={i}>
-                    <strong>{item.label}:</strong> {item.value}
-                  </li>
-                ))}
-              </ul>
+            <div className="bg-white p-4 rounded shadow w-full mx-auto text-left">
+            <h2 className="text-xl font-semibold mb-2">Your selections:</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+              {summary.map(({ label, value }, index) => (
+                <div key={index} className="flex">
+                  <span className="font-bold mr-2">{label}:</span>
+                  <span>{value}</span>
+                </div>
+              ))}
             </div>
+          </div>
 
        {/* Suggested game results  */}
       {suggestedGames.map((g, index) => (
