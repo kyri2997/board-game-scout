@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Now your custom layers can follow */
 @layer base {
   * {
     @apply border-border;
@@ -43,6 +42,13 @@ a:hover {
 h1 {
   font-size: 2.5em;
   line-height: 1.1;
+}
+@media screen and (max-width: 640px) {
+  h1 {
+    font-size: 2em;
+  }
+}
+  
 }
 
 /* Default button reset + structure */
