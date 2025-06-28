@@ -215,7 +215,6 @@ const summary = formatAnswers(answers);
           <div className="p-6 max-w-5xl mx-auto space-y-8">
             <div className="flex justify-between" >
             <h1 className="text-3xl font-bold">Your Game Recommendations</h1>
-                  <Button onClick={handleRestart}>🔄 Start Again</Button>
                   
             </div>
 
@@ -311,6 +310,9 @@ const summary = formatAnswers(answers);
               ➕ Load More Games
             </Button>
           )}
+          </div>
+          <div className="text-center mt-6">
+           <Button onClick={handleRestart} className="bg-red-400">🔄 Start Again</Button>
       </div>
     </div>
   );
