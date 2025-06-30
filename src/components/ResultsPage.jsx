@@ -212,7 +212,7 @@ const summary = formatAnswers(answers);
   
 
   return (
-          <div className="p-6 max-w-5xl mx-auto space-y-8">
+            <div className="p-6 w-[90vw] max-w-5xl mx-auto space-y-8">
             <div className="flex justify-between" >
             <h1 className="text-3xl font-bold text-black">Your Game Recommendations</h1>
                   

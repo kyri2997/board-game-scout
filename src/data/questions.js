@@ -119,7 +119,7 @@ export const questions = [
         {
           id: 5,
           label: "No limit",
-          maxplaytime: "No limit"
+          maxplaytime: "9999"
         }
       ]
     },

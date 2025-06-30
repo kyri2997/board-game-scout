@@ -141,7 +141,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
 
         {favouriteGamesList.length > 0 && (
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2">Your Favourite Games:</h3>
+              <h3 className="text-lg font-semibold mb-2 text-black">Your Favourite Games:</h3>
               <ul className="space-y-2">
                 {favouriteGamesList.map((game, index) => (
                   <li key={game.id || index} className="border p-2 rounded flex items-center gap-4">
