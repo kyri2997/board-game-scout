@@ -195,7 +195,7 @@ const summary = formatAnswers(answers);
       
       {/* User summary */}
       <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
-        <h3 className="font-bold mb-2">Your selections:</h3>
+        <h3 className="font-bold mb-2 text-black">Your selections:</h3>
         <ul className="space-y-1 text-sm text-gray-700">
           {summary.map((item, i) => (
             <li key={i}>
@@ -250,15 +250,15 @@ const summary = formatAnswers(answers);
             className="w-full md:w-48 h-auto object-cover rounded"
           />
 
-          <div className="flex-1 space-y-2 text-sm md:text-base ">
-            <h3 className="font-semibold text-lg text-black">
+          <div className="flex-1 space-y-2 text-sm md:text-base text-black ">
+            <h3 className="font-semibold text-lg text-slate-800 ">
               {g.name}{" "}
               <span className="text-gray-500">
                 ({g.year ?? "?"})
               </span>
             </h3>
             <p>
-              <strong>Why was this recommended:</strong> {g.reason && <span className="italic">{g.reason}</span>}
+              <strong>Why was this recommended:</strong> {g.reason && <span className="italic" >{g.reason}</span>}
             </p>
 
             <div className="grid grid-cols-2 gap-4">

@@ -117,7 +117,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
         resultsRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } catch (err) {
-      console.error("Search failed:", err);
+      alert("We couldn't find this game. Name must be written exactly or you can try a different game")
     }
   };
 
