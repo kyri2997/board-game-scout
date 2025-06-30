@@ -180,12 +180,12 @@ const summary = formatAnswers(answers);
   if (isLoading) {
 
     return (
-      <div
-      className="relative h-screen w-screen bg-cover bg-center bg-black/60"
-      style={{
-        backgroundImage: `url(/assets/background1.jpg)`
-      }}
-    >
+    //   <div
+    //   className="relative h-screen w-screen bg-cover bg-center bg-black/60"
+    //   style={{
+    //     backgroundImage: `url(/assets/background1.jpg)`
+    //   }}
+    // >
 
       <div className="flex flex-col items-center justify-center p-10 text-center">
        {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
@@ -205,7 +205,7 @@ const summary = formatAnswers(answers);
         </ul>
       </div>
     </div>
-</div>
+// </div>
 
     );
   }

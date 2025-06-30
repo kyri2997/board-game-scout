@@ -10,7 +10,7 @@ export const metadata = {
   
 function RootLayout({ children }) {
     return (
-      <html lang="en">
+      <html lang="en" className="light">
         <body >
           {children}
         </body>
