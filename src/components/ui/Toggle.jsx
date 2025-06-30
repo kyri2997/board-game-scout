@@ -30,9 +30,8 @@ const toggleItemVariants = cva(
         lg: "h-12 px-4 text-base",
       },
       variant: {
-        default: "bg-white hover:bg-gray-100 text-gray-700 border border-gray-300",
-        // yellow: "bg-yellow-100 hover:bg-yellow-200 text-yellow-900 border border-yellow-300",
-        yellow: "data-[state=on]:bg-yellow-400 data-[state=on]:text-black",
+        default: "bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 text-black",
+        yellow: "bg-yellow-100 hover:bg-yellow-200 text-yellow-900 border border-yellow-300",
         blue: "bg-blue-100 hover:bg-blue-200 text-blue-900 border border-blue-300",
         green: "bg-green-100 hover:bg-green-200 text-green-900 border border-green-300",
         pink: "bg-pink-100 hover:bg-pink-200 text-pink-900 border border-pink-300",

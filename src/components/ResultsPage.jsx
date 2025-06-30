@@ -187,7 +187,7 @@ const summary = formatAnswers(answers);
     //   }}
     // >
 
-      <div className="flex flex-col items-center justify-center p-10 text-center gap-2">
+      <div className="flex flex-col items-center justify-center p-10 text-center gap-5">
        {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
         <div className="dice animate-roll" />
         <p className="text-xl font-bold text-black">Rolling the dice...</p>
@@ -221,9 +221,9 @@ const summary = formatAnswers(answers);
             {/* // User summary */}
             <div className="bg-white p-4 rounded shadow w-full mx-auto text-left">
             <h2 className="text-xl font-semibold mb-2 text-black">Your selections:</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-black">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
               {summary.map(({ label, value }, index) => (
-                <div key={index} className="flex text-black">
+                <div key={index} className="flex ">
                   <span className="font-bold mr-2 text-black">{label}:</span>
                   <span>{value}</span>
                 </div>
@@ -250,8 +250,8 @@ const summary = formatAnswers(answers);
             className="w-full md:w-48 h-auto object-cover rounded"
           />
 
-          <div className="flex-1 space-y-2 text-sm md:text-base">
-            <h3 className="font-semibold text-lg">
+          <div className="flex-1 space-y-2 text-sm md:text-base ">
+            <h3 className="font-semibold text-lg text-black">
               {g.name}{" "}
               <span className="text-gray-500">
                 ({g.year ?? "?"})
@@ -307,7 +307,7 @@ const summary = formatAnswers(answers);
         <p className="text-gray-500 italic">Loading more games... (this can take about 20 seconds)</p>
           ) : (
             <Button onClick={loadMore}>
-              ➕ Load More Games
+              + Load More Games
             </Button>
           )}
           </div>
