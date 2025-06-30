@@ -190,8 +190,8 @@ const summary = formatAnswers(answers);
       <div className="flex flex-col items-center justify-center p-10 text-center">
        {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
         <div className="dice animate-roll" />
-        <p className="text-xl font-bold text-white">Rolling the dice...</p>
-        <p className="text-white font-bold">Finding your perfect games (this can take about 20 seconds)</p>
+        <p className="text-xl font-bold text-black">Rolling the dice...</p>
+        <p className="text-black font-bold">Finding your perfect games (this can take about 20 seconds)</p>
       
       {/* User summary */}
       <div className="bg-white p-4 rounded shadow max-w-lg mx-auto text-left">
@@ -240,7 +240,7 @@ const summary = formatAnswers(answers);
           }`}
         >
            {index === 0 && (
-            <div className="absolute -top-3 -left-3 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow">
+            <div className="absolute -top-3 -left-3 bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold shadow">
               🌟 Top Recommendation!
             </div>
           )}
