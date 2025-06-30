@@ -187,7 +187,7 @@ const summary = formatAnswers(answers);
     //   }}
     // >
 
-      <div className="flex flex-col items-center justify-center p-10 text-center">
+      <div className="flex flex-col items-center justify-center p-10 text-center gap-2">
        {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
         <div className="dice animate-roll" />
         <p className="text-xl font-bold text-black">Rolling the dice...</p>
@@ -214,17 +214,17 @@ const summary = formatAnswers(answers);
   return (
           <div className="p-6 max-w-5xl mx-auto space-y-8">
             <div className="flex justify-between" >
-            <h1 className="text-3xl font-bold">Your Game Recommendations</h1>
+            <h1 className="text-3xl font-bold text-black">Your Game Recommendations</h1>
                   
             </div>
 
             {/* // User summary */}
             <div className="bg-white p-4 rounded shadow w-full mx-auto text-left">
-            <h2 className="text-xl font-semibold mb-2">Your selections:</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+            <h2 className="text-xl font-semibold mb-2 text-black">Your selections:</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-black">
               {summary.map(({ label, value }, index) => (
-                <div key={index} className="flex">
-                  <span className="font-bold mr-2">{label}:</span>
+                <div key={index} className="flex text-black">
+                  <span className="font-bold mr-2 text-black">{label}:</span>
                   <span>{value}</span>
                 </div>
               ))}

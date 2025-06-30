@@ -126,7 +126,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
     <div className="p-4">
           <>
         <button className="back-btn" onClick={props.handleBack}>← Back</button>
-        <h2 className="text-xl font-bold mb-4">{props.question}</h2>
+        <h2 className="text-xl font-bold mb-4 text-black">{props.question}</h2>
         
         {/* favourite games stored list */}
         {favouriteGamesList.length === 0 && (
@@ -141,7 +141,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
                   <li key={game.id || index} className="border p-2 rounded flex items-center gap-4">
                     <img src={game.image} alt={game.name} className="w-16 h-16 object-cover rounded" />
                     <div>
-                      <p className="font-medium">{game.name}</p>
+                      <p className="font-medium text-black">{game.name}</p>
                       <button
                       onClick={() => setFavouriteGamesList(prev => prev.filter(g => g.id !== game.id))}
                       className="ml-auto text-red-600 hover:underline"
@@ -155,11 +155,11 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
             </div>
           )}
 
-            <div className="mb-4 flex gap-2">
+            <div className="mb-4 flex gap-2 bg-white">
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder="Search for exact name of your favourite game... e.g. Catan"
+                placeholder="e.g. Catan"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => {
@@ -212,7 +212,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
               </button>
                 <img src={game.image} alt={game.name} className="w-full h-auto object-cover mb-2 rounded" />
 
-                <p className="text-sm font-medium">{getGameName(game)}</p>
+                <p className="text-sm font-medium text-black">{getGameName(game)}</p>
                 {/* <p className="text-sm font-medium">
                 {typeof game.name === "object" ? game.name.name : game.name}
                   </p> */}
