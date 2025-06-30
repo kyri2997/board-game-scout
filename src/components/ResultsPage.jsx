@@ -187,7 +187,7 @@ const summary = formatAnswers(answers);
       }}
     >
 
-      <div className="flex flex-col items-center justify-center p-10 text-center space-y-4">
+      <div className="flex flex-col items-center justify-center p-10 text-center">
        {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
         <div className="dice animate-roll" />
         <p className="text-xl font-bold text-white">Rolling the dice...</p>
