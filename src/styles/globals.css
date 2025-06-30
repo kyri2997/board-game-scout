@@ -226,7 +226,7 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-width: 80%;
+  max-width: 85%;
   width: 100%;
   padding: 1rem 1rem 2rem 1rem;
   text-align: center;
@@ -250,7 +250,7 @@ button:focus-visible {
   display: flex !important; /* override inline-flex */
   flex-direction: column !important;
   /* gap: 1rem; */
-  padding: 1rem 1rem 0 1rem;
+  padding: 1rem 1rem 0 ;
   border-radius: 8px;
   border: 1px solid #ccc;
   /* background-color: var(--muted); or your desired bg */

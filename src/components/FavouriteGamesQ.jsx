@@ -111,13 +111,19 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
         .filter((game) => game && game.name)
         .sort((a, b) => b.usersRated - a.usersRated);
   
+
+    if (filteredAndSorted.length === 0) {
+      alert("We couldn't find this game. Please try a different name or check your spelling.");
+      return;
+    }
+
       setSearchResults(filteredAndSorted);
   
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } catch (err) {
-      alert("We couldn't find this game. Name must be written exactly or you can try a different game")
+      alert("Something went wrong while searching for games. Please try again later.");
     }
   };
 

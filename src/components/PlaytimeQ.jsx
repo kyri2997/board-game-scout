@@ -7,7 +7,7 @@ export default function PlaytimeQ(props) {
 
   const containerRef = useRef(null);
   useEnterSubmit(containerRef, props.onNext, !!props.selectedOption);
-  const colourVariants = [ "yellow", "blue", "green", "pink", "purple" ];
+  const colourVariants = [ "yellow", "blue", "pink", "green", "purple" ];
 
 
   return (
