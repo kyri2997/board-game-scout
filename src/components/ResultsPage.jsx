@@ -180,15 +180,8 @@ const summary = formatAnswers(answers);
   if (isLoading) {
 
     return (
-    //   <div
-    //   className="relative h-screen w-screen bg-cover bg-center bg-black/60"
-    //   style={{
-    //     backgroundImage: `url(/assets/background1.jpg)`
-    //   }}
-    // >
 
       <div className="flex flex-col items-center justify-center p-10 text-center gap-5">
-       {/* <div className="absolute inset-0 bg-black/60 z-0" /> */}
         <div className="dice animate-roll" />
         <p className="text-xl font-bold text-black">Rolling the dice...</p>
         <p className="text-black font-bold">Finding your perfect games (this can take about 20 seconds)</p>
@@ -212,7 +205,7 @@ const summary = formatAnswers(answers);
   
 
   return (
-            <div className="p-6 w-[90vw] max-w-5xl mx-auto space-y-8">
+            <div className=" w-full mx-auto space-y-8">
             <div className="flex justify-between" >
             <h1 className="text-3xl font-bold text-black">Your Game Recommendations</h1>
                   
