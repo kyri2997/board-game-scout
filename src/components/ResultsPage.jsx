@@ -223,8 +223,8 @@ const summary = formatAnswers(answers);
             <h2 className="text-xl font-semibold mb-2 text-black">Your selections:</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
               {summary.map(({ label, value }, index) => (
-                <div key={index} className="flex ">
-                  <span className="font-bold mr-2 text-black">{label}:</span>
+                <div key={index} className="flex text-black ">
+                  <span className="font-bold mr-2">{label}:</span>
                   <span>{value}</span>
                 </div>
               ))}
