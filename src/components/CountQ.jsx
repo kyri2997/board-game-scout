@@ -7,7 +7,8 @@ export default function CountQ(props) {
 
   const containerRef = useRef(null);
   useEnterSubmit(containerRef, props.onNext, !!props.selectedOption);
-  const colourVariants = [ "yellow", "blue", "green", "red", "purple", "orange" ];
+  
+  const colourVariants = [ "yellow", "blue", "green", "pink", "purple" ];
 
   
   return (

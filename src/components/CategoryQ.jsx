@@ -24,7 +24,7 @@ export default function CategoryQ(props) {
   // }, [answers.weight, selectedOption, options, handleChange]);
 
 
- const colourVariants = [ "yellow", "blue", "green", "red", "purple", "orange" ];
+  const colourVariants = ["blue", "yellow", "purple", "green", "purple" ];
  
  return (
    

@@ -29,13 +29,21 @@ const toggleItemVariants = cva(
         sm: "h-8 px-2 text-xs",
         lg: "h-12 px-4 text-base",
       },
+      // variant: {
+      //   default: "bg-white hover:bg-gray-100 border border-gray-300 text-black",
+      //   yellow: "bg-yellow-100 hover:bg-yellow-200 text-yellow-900 border border-yellow-300",
+      //   blue: "bg-blue-100 hover:bg-blue-200 text-blue-900 border border-blue-300",
+      //   green: "bg-green-100 hover:bg-green-200 text-green-900 border border-green-300",
+      //   pink: "bg-red-100 hover:bg-red-200 border border-red-300 text-black",
+      //   purple: "bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-300",
+      // },
       variant: {
-        default: "bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 text-black",
-        yellow: "bg-yellow-100 hover:bg-yellow-200 text-yellow-900 border border-yellow-300",
-        blue: "bg-blue-100 hover:bg-blue-200 text-blue-900 border border-blue-300",
-        green: "bg-green-100 hover:bg-green-200 text-green-900 border border-green-300",
-        pink: "bg-pink-100 hover:bg-pink-200 text-pink-900 border border-pink-300",
-        purple: "bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-300",
+        default: "bg-white hover:bg-gray-100 border border-gray-300 text-black data-[state=on]:bg-gray-200",
+        yellow: "bg-yellow-100 hover:bg-yellow-200 text-yellow-900 border border-yellow-300 data-[state=on]:bg-yellow-300",
+        blue: "bg-blue-100 hover:bg-blue-200 text-blue-900 border border-blue-300 data-[state=on]:bg-blue-300",
+        green: "bg-green-100 hover:bg-green-200 text-green-900 border border-green-300 data-[state=on]:bg-green-300",
+        pink: "bg-pink-100 hover:bg-pink-200 text-pink-900 border border-pink-300 data-[state=on]:bg-pink-300",
+        purple: "bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-300 data-[state=on]:bg-purple-300",
       },
     },
     defaultVariants: {
@@ -66,6 +74,8 @@ const ToggleGroupItem = React.forwardRef(
     />
   )
 );
+
+
 ToggleGroupItem.displayName = "ToggleGroupItem";
 
 export { ToggleGroup, ToggleGroupItem };

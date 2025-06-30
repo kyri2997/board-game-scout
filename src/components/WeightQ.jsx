@@ -8,7 +8,7 @@ export default function WeightQ(props) {
   const containerRef = useRef(null);
   useEnterSubmit(containerRef, props.onNext, !!props.selectedOption);
 
- const colourVariants = [ "yellow", "blue", "green", "red", "purple", "orange" ];
+ const colourVariants = [ "yellow", "blue", "green", "pink", "purple" ];
 
 
   return (
@@ -26,12 +26,11 @@ export default function WeightQ(props) {
         className="toggle-group-container"
       >
         {props.options.map((opt, index) => (
+          
           <ToggleGroupItem
             key={opt.id}
             value={opt.averageweight}
-            className={`toggle-group` }
-            // className="toggle-group data-[state=on]:bg-yellow-400 data-[state=on]:text-black"
-
+            className={`toggle-group`}
             aria-label={`${opt.label}-${opt.description}. ${opt.examples}`}
             variant={colourVariants[index % colourVariants.length]}
             // variant="yellow"

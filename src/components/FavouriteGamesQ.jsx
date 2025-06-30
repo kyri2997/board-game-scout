@@ -155,7 +155,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
             </div>
           )}
 
-            <div className="mb-4 flex gap-2 bg-white">
+            <div className="mb-4 flex gap-2">
               <input
                 ref={searchInputRef}
                 type="text"
@@ -174,7 +174,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
                   }
                 }}         
                 
-                className="flex-grow p-2 border rounded"
+                className="flex-grow p-2 border rounded  bg-slate-100 text-slate-900"
               />
               <Button onClick={handleSearch}>Search</Button>
             </div>
@@ -185,7 +185,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
         {/* Search results */}
         {searchResults.length > 0 && (
           <>
-            <h3 className="mt-6 text-lg font-semibold col-span-full" ref={resultsRef}>Search Results</h3>
+            <h3 className="mt-6 text-lg font-semibold col-span-full text-black" ref={resultsRef}>Search Results</h3>
             {searchResults.map((game) => (
               <div
                 key={`search-${game.id}`}

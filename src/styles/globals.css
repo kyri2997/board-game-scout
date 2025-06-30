@@ -253,7 +253,7 @@ button:focus-visible {
   padding: 1rem 1rem 0 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  background-color: var(--muted); /* or your desired bg */
+  /* background-color: var(--muted); or your desired bg */
   height: auto !important; /* important to override h-9 */
   width: 100%;
   max-width: 600px;
@@ -271,7 +271,6 @@ button:focus-visible {
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: white;
 }
 
 .question-grid {
@@ -292,7 +291,7 @@ button:focus-visible {
 }
 
 .grid-tile {
-  background-color: #f5f5f5; /* light background */
+  /* background-color: #f5f5f5; */
   padding: 30px;
   border-radius: 8px;
   text-align: center;
