@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: false,
-    // darkMode: ["class"],
+    darkMode: ["class"],
     content: [  
 		'./app/**/*.{js,ts,jsx,tsx}',  // Adjust to match your Next.js app folder
 		'./src/**/*.{js,jsx,ts,tsx}',  // Adjust if using a src folder
