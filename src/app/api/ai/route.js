@@ -52,7 +52,7 @@ ${previousIds.length > 0
   : ""
 }
 
-Format these recommendations as JSON )(reason= Give me a brief explanation why this game is a good match for the user preferences, WITHOUT just repeating how it matches user choices), for example:
+Format these recommendations as JSON )(reason= Give me a brief explanation why this game is a good match for the user preferences (writing it as if you're talking directly to the user e.g. "your preferences"), WITHOUT just repeating how it matches user choices), for example:
 
 [
   {
