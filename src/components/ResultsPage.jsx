@@ -11,6 +11,7 @@ export default function ResultsPage({ answers, handleRestart }) {
   const [isAppending, setIsAppending] = useState(false);
   const [previousAiIds, setPreviousAiIds] = useState([]);
   const hasFetched = useRef(false);
+  const [hasMoreGames, setHasMoreGames] = useState(true);
 
   
 
@@ -21,7 +22,7 @@ export default function ResultsPage({ answers, handleRestart }) {
     count:3 ,
   })
     const enriched = await fetchBGGData(recs.slice(0, 3));
-    // setSuggestedGames((prev) => [...prev, ...enriched]); // ✅ appends to existing
+
     setSuggestedGames(prev => {
       const existingIds = new Set(prev.map(g => g.id));
       const newUnique = enriched.filter(g => !existingIds.has(g.id));
@@ -31,13 +32,20 @@ export default function ResultsPage({ answers, handleRestart }) {
   };
 
   useEffect(() => {
-    const fetchInitial = async () => {
-      setIsLoading(true);
-      const initial = await getGameRecommendations(answers);
-      const enriched = await fetchBGGData(initial);
-      setSuggestedGames(enriched);
-      setIsLoading(false);
-    };
+  const fetchInitial = async () => {
+  setIsLoading(true);
+  try {
+    const initial = await getGameRecommendations(answers);
+    const enriched = await fetchBGGData(initial);
+    setSuggestedGames(enriched);
+    setPreviousAiIds(initial.map(g => g.id)); // ✅ Fix
+  } catch (err) {
+    alert("Failed to fetch initial game recommendations.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
     if (answers && !hasFetched.current) {
       hasFetched.current = true; // ✅ only allow once
@@ -46,23 +54,40 @@ export default function ResultsPage({ answers, handleRestart }) {
   }, [answers]);
 
   const loadMore = async () => {
-    setIsAppending(true);
+  setIsAppending(true);
+  try {
     const more = await getGameRecommendations({
       ...answers,
       previousIds: previousAiIds,
-      count: 3,
+      count: 15, // Request more for better filtering
     });
-  
+
     const enriched = await fetchBGGData(more);
-    setSuggestedGames(prev => {
-      const existingIds = new Set(prev.map(g => g.id));
-      const newUnique = enriched.filter(g => !existingIds.has(g.id));
-      return [...prev, ...newUnique];
-    });
-    setPreviousAiIds(prev => [...prev, ...more.map(g => g.id)]); 
-    console.log(previousAiIds)
+    const existingIds = new Set(suggestedGames.map(g => g.id));
+    const newUnique = enriched.filter(g => !existingIds.has(g.id));
+
+    const nextFive = newUnique.slice(0, 5);
+
+    if (nextFive.length === 0) {
+      setHasMoreGames(false); // Nothing left
+    } else {
+      setSuggestedGames(prev => [...prev, ...nextFive]);
+      setPreviousAiIds(prev => [
+        ...prev,
+        ...nextFive.map(g => g.id).filter(id => !prev.includes(id))
+      ]);
+
+      if (nextFive.length < 5) {
+        setHasMoreGames(false); // We’re probably out of results
+      }
+    }
+  } catch (err) {
+    console.error("Load more failed:", err);
+    alert("Couldn't load more games. Please try again.");
+  } finally {
     setIsAppending(false);
-  };
+  }
+};
 
   function decodeHTML(str) {
     const parser = new DOMParser();
@@ -296,13 +321,15 @@ const summary = formatAnswers(answers);
         </div>
       ))}
         <div className="text-center mt-6">
+
         {isAppending ? (
         <p className="text-gray-500 italic">Loading more games... (this can take about 20 seconds)</p>
-          ) : (
-            <Button onClick={loadMore}>
-              + Load More Games
-            </Button>
-          )}
+      ) : hasMoreGames ? (
+        <Button onClick={loadMore}>+ Load More Games</Button>
+      ) : (
+        <p className="text-gray-500 italic">No more game recommendations available.</p>
+      )}
+
           </div>
           <div className="text-center mt-6">
            <Button onClick={handleRestart} className="bg-red-400">🔄 Start Again</Button>
