@@ -43,7 +43,7 @@ Here are user preferences:
 - Additional message: ${message || "No additional preferences provided"}
 
 
-Based on these, recommend 5-10 of the most popular board games (based on most BGG user ratings) matching the user preferences - recommendation MUST match type, player count and playtime, but the rest of the preferences can provide direction rather than strict requirements. If user selected "Experience level: Up to 1.99", don't recommend anything more complex than 2.99. Sort the recommendations by the closest match to their interests, top to bottom.
+Based on these, recommend 5-10 of the most popular board games (based on most BGG user ratings) matching the user preferences - recommendation MUST match type, player count and playtime. If user selected "Experience level: Up to 1.99", don't recommend anything more complex than 2.99. Sort the recommendations by the closest match to their interests, top to bottom.
 
 If previousIds provided - Each recommendation must be a unique game not shown previously:
 ${previousIds.length > 0
