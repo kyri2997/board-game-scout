@@ -34,6 +34,7 @@ yarn-error.log*
 
 .env
 .env.local
+.env.claude
 
 # vercel
 .vercel
@@ -43,3 +44,4 @@ yarn-error.log*
 next-env.d.ts
 
 route.js
+clauderoute.js

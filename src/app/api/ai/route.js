@@ -1,30 +1,10 @@
 import { NextResponse } from "next/server";
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY, // use your new .env file
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, 
 });
 
-async function fetchClaudeWithRetry(prompt, retries = 3, delayMs = 1500) {
-  for (let i = 0; i < retries; i++) {
-    try {
-      return await anthropic.messages.create({
-        model: "claude-3-7-sonnet-20250219",
-        max_tokens: 2000,
-        messages: [{ role: "user", content: prompt }],
-
-      });
-      
-    } catch (err) {
-      if (err.status === 529 && i < retries - 1) {
-        console.warn(`Retry ${i + 1}...`);
-        await new Promise(res => setTimeout(res, delayMs));
-      } else {
-        throw err;
-      }
-    }
-  }
-}
 
 export async function POST(req) {
   try {
@@ -91,17 +71,23 @@ Format these recommendations as JSON, for example:
 
     `;
 
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o", // or "gpt-3.5-turbo"
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.7,
+    });
 
-    const result = await fetchClaudeWithRetry(prompt);
+    // const result = await fetchAiWithRetry(prompt);
+    const raw = response.choices[0]?.message?.content?.trim() ?? "";
 
-    let cleaned = result.content[0]?.text?.trim() ?? "";
+    let cleaned = raw;
     if (cleaned.startsWith("```")) {
       cleaned = cleaned.replace(/^```(json)?/, "").replace(/```$/, "").trim();
     }
 
     const start = cleaned.indexOf("[");
     const end = cleaned.lastIndexOf("]");
-    if (start === -1 || end === -1) throw new Error("No JSON array in Claude response");
+    if (start === -1 || end === -1) throw new Error("No JSON array in AI response");
 
     let jsonStr = cleaned.slice(start, end + 1);
     let games;
@@ -109,14 +95,13 @@ Format these recommendations as JSON, for example:
     try {
       games = JSON.parse(jsonStr);
     } catch (err) {
-      // Fallback trim
       const trimmed = jsonStr.replace(/,\s*{[^}]*$/, "");
       games = JSON.parse(trimmed + "]");
     }
 
     return NextResponse.json({ games });
   } catch (err) {
-    console.error("Claude API Error:", err);
-    return NextResponse.json({ error: "Claude failed" }, { status: 500 });
+    console.error("AI API Error:", err);
+    return NextResponse.json({ error: "AI failed" }, { status: 500 });
   }
 }
