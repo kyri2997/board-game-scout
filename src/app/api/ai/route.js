@@ -1,108 +1,118 @@
 import { NextResponse } from "next/server";
-import OpenAI from 'openai';
+import { NextRequest } from "next/server";
+import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, 
-});
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-
-export async function POST(req) {
-  try {
-    const preferences = await req.json();
-
-    const {
-      weight = "any",
-      type = "any",
-      playerCount = "any",
-      maxPlaytime = "any",
-      category,
-      mechanics,
-      favouriteGames,
-      message,
-      previousIds = [],
-    } = preferences;
-
-    const cat = Array.isArray(category) ? category.join(", ") : category || "any";
-    const mech = Array.isArray(mechanics) ? mechanics.join(", ") : mechanics || "any";
-
-    const favs = Array.isArray(favouriteGames)
-      ? favouriteGames.map((g) => g.name).join(", ")
-      : "";
-
-    const prompt = `
-    You are a helpful board game recommender.
-
-Here are user preferences:
-- Experience level (average weight): ${weight}
-- Type of game (card or board): ${type}
-- PlayerCount: ${playerCount}
-- Max playtime: ${maxPlaytime} minutes
-- Primary category of preferred games: ${cat}
-- Primary mechanics: ${mech}
-- Favourite games: ${favs}
-- Additional message: ${message || "No additional preferences provided"}
-
-
-
-Based on these, recommend 8 of the most popular board games (based on most BGG user ratings) matching the user preferences - recommendation should match type, player count and playtime. If user selected "Experience level: Up to 1.99", prioritise simpler games. Sort the recommendations by the closest match to their interests, top to bottom.
-
-If previousIds provided:
-${previousIds.length > 0
-  ? `Avoid these BGG IDs: ${previousIds.join(", ")}`
-  : ""
+/**
+ * Turn an array or single value into a comma string or fallback.
+ */
+function listOrAny(value, fallback = "any") {
+  if (Array.isArray(value)) return value.join(", ");
+  if (value) return String(value);
+  return fallback;
 }
 
-Format these recommendations as JSON )(reason= Give me a brief explanation why this game is a good match for the user preferences (writing it as if you're talking directly to the user e.g. "your preferences"), WITHOUT just repeating how it matches user choices), for example:
+/**
+ * Strip out ```json fences and trim to just the JSON array.
+ */
+function extractJsonArray(text) {
+  const noFence = text.replace(/^```(?:json)?|```$/g, "").trim();
+  const start = noFence.indexOf("[");
+  const end = noFence.lastIndexOf("]");
+  if (start === -1 || end === -1) {
+    throw new Error("No JSON array in AI response");
+  }
+  return noFence.slice(start, end + 1);
+}
 
+function buildPrompt(prefs) {
+  const {
+    weight,
+    type,
+    playerCount,
+    maxPlaytime,
+    category,
+    mechanics,
+    favouriteGames,
+    message,
+    previousIds = [],
+  } = prefs;
+
+  const favs = Array.isArray(favouriteGames)
+    ? favouriteGames.map((g) => g.name).join(", ")
+    : "";
+
+  return `
+You are a helpful board game recommender.
+
+Here are user preferences:
+- Experience level (average weight): ${listOrAny(weight)}
+- Type of game (card or board): ${listOrAny(type)}
+- Player count: ${listOrAny(playerCount)}
+- Max playtime: ${listOrAny(maxPlaytime)} minutes
+- Primary categories: ${listOrAny(category)}
+- Primary mechanics: ${listOrAny(mechanics)}
+- Favourite games: ${favs || "none"}
+- Additional message: ${message || "none"}
+
+Recommend 8 top‐rated board games (by BGG ratings) that match type, player count, and playtime.
+If weight is “Up to 1.99”, prioritize simpler titles.
+Sort by best match.
+
+${previousIds.length
+    ? `Avoid these BGG IDs: ${previousIds.join(", ")}`
+    : ""
+}
+
+Return JSON like:
 [
   {
-    "name": "Wingspan",
-    "id": "266192",
+    "name": "...",
+    "id": "...",
     "reason": "...",
     "image": "...",
-    "category": "Strategy, Card Game",
-    "mechanics": "Card Drafting, Engine Building",
-    "playerCount": "2-3",
-    "minPlaytime": 40,
-    "maxPlaytime": 70,
-    "weight": 2.5,
-    "rating": 4.5
+    "category": "...",
+    "mechanics": "...",
+    "playerCount": "...",
+    "minPlaytime": 0,
+    "maxPlaytime": 0,
+    "weight": 0,
+    "rating": 0
   }
 ]
+`;
+}
 
-    `;
+export async function POST(req = new NextRequest()) {
+  try {
+    const prefs = await req.json();
+    const prompt = buildPrompt(prefs);
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o", // or "gpt-3.5-turbo"
+    const res = await openai.chat.completions.create({
+      model: "gpt-4o",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
     });
 
-    // const result = await fetchAiWithRetry(prompt);
-    const raw = response.choices[0]?.message?.content?.trim() ?? "";
+    const raw = res.choices?.[0]?.message?.content ?? "";
+    const jsonText = extractJsonArray(raw);
 
-    let cleaned = raw;
-    if (cleaned.startsWith("```")) {
-      cleaned = cleaned.replace(/^```(json)?/, "").replace(/```$/, "").trim();
-    }
-
-    const start = cleaned.indexOf("[");
-    const end = cleaned.lastIndexOf("]");
-    if (start === -1 || end === -1) throw new Error("No JSON array in AI response");
-
-    let jsonStr = cleaned.slice(start, end + 1);
     let games;
-
     try {
-      games = JSON.parse(jsonStr);
-    } catch (err) {
-      const trimmed = jsonStr.replace(/,\s*{[^}]*$/, "");
-      games = JSON.parse(trimmed + "]");
+      games = JSON.parse(jsonText);
+    } catch {
+      // If trailing comma error, drop last comma block
+      const safe = jsonText.replace(/,\s*{[^}]*$/, "]"); 
+      games = JSON.parse(safe);
     }
 
     return NextResponse.json({ games });
   } catch (err) {
     console.error("AI API Error:", err);
-    return NextResponse.json({ error: "AI failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "AI failed to generate recommendations." },
+      { status: 500 }
+    );
   }
 }
