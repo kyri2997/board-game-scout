@@ -59,6 +59,7 @@ Here are user preferences:
 Recommend 8 top‐rated board games (by BGG ratings) that match type, player count, and playtime.
 If weight is “Up to 1.99”, prioritize simpler titles.
 Sort by best match.
+reason= Give me a brief explanation why this game is a good match for the user preferences (writing it as if you're talking directly to the user e.g. "your preferences"). Do not just repeat how it matches user choices, but explain why it is a good match for the user.  )
 
 ${previousIds.length
     ? `Avoid these BGG IDs: ${previousIds.join(", ")}`
