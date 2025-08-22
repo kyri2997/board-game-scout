@@ -65,7 +65,7 @@ export default function CategoryQ(props) {
       onClick={props.onNext}
       className= "next-btn"
       type="button"
-      >Next</button>
+      >Next (or press Enter)</button>
     </div>
   )
 }

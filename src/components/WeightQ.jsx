@@ -50,7 +50,7 @@ export default function WeightQ(props) {
         className="next-btn"
         type="button"
       >
-        Next
+        Next (or press Enter)
       </button>
     </div>
   );

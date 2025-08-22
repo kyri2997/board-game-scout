@@ -27,7 +27,7 @@ export default function MessageQ({ selectedOption, handleChange, onNext, ...prop
           onClick={handleSubmit}
           className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
         >
-          Next
+          Next (or press Enter)
         </button>
       </div>
     </div>

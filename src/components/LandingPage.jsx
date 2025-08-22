@@ -46,7 +46,7 @@ export default function LandingPage({ onStart }) {
             {/* <p className="text-xl font-semibold">Rolling the dice...</p> */}
           </div>  
         <Button onClick={onStart} className="text-lg px-6 py-4">
-          Start Questionnaire
+          Start Questionnaire (or press Enter)
         </Button>
       </div>
     </div>

@@ -42,7 +42,7 @@ export default function TypeQ(props) {
       onClick={props.onNext}
       className= "next-btn"
       type="button"
-      >Next</button>
+      >Next (or press Enter)</button>
     </div>
   )
 }

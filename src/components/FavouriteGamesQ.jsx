@@ -232,7 +232,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
         <Button onClick={handleSubmit} ref={nextButtonRef} 
         disabled={favouriteGamesList.length < 1}
         >
-          Next
+          Next (or press Enter)
         </Button>
       </div>
     </div>

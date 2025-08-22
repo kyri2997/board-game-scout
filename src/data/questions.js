@@ -3,7 +3,7 @@ export const questions = [
       id: 1,
       key: "weight",
       component: "WeightQ",
-      question: "How much do you know about the world of modern board games?",
+      question: "How much do you know about modern board games?",
       options: [
         {
           id: 1,
