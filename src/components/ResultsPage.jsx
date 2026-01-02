@@ -14,21 +14,21 @@ export default function ResultsPage({ answers, handleRestart }) {
 
   
 
-  const fetchAndDisplay = async () => {
-    setIsLoading(true);
-    const recs = await getGameRecommendations({
-      ...answers,
-    count:3 ,
-  })
-    const enriched = await fetchBGGData(recs.slice(0, 3));
-    // setSuggestedGames((prev) => [...prev, ...enriched]); // ✅ appends to existing
-    setSuggestedGames(prev => {
-      const existingIds = new Set(prev.map(g => g.id));
-      const newUnique = enriched.filter(g => !existingIds.has(g.id));
-      return [...prev, ...newUnique];
-    });
-    setIsLoading(false);
-  };
+  // const fetchAndDisplay = async () => {
+  //   setIsLoading(true);
+  //   const recs = await getGameRecommendations({
+  //     ...answers,
+  //   count:3 ,
+  // })
+  //   const enriched = await fetchBGGData(recs.slice(0, 3));
+  //   // setSuggestedGames((prev) => [...prev, ...enriched]); // ✅ appends to existing
+  //   setSuggestedGames(prev => {
+  //     const existingIds = new Set(prev.map(g => g.id));
+  //     const newUnique = enriched.filter(g => !existingIds.has(g.id));
+  //     return [...prev, ...newUnique];
+  //   });
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
     const fetchInitial = async () => {
@@ -77,7 +77,7 @@ export default function ResultsPage({ answers, handleRestart }) {
       list.map(async (game) => {
         try {
           const res = await fetch(
-            `https://boardgamegeek.com/xmlapi2/thing?id=${game.id}&stats=1`
+            `/api/bgg/thing?id=${game.id}`
           );
           const xml = await res.text();
           const doc = new DOMParser().parseFromString(xml, "text/xml");

@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/Button";
 import { getGameRecommendations } from "@/lib/getGameRecommendations.js" 
@@ -33,13 +34,13 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
   };
 
   const handleSubmit = () => {
-    if (favouriteGamesList.length >= 1) {
-      console.log("Submitting favourite games:", favouriteGamesList);
+    // if (favouriteGamesList.length >= 1) {
+    //   console.log("Submitting favourite games:", favouriteGamesList);
       handleChange(favouriteGamesList, "favouriteGames");
       onNext();
-    } else {
-      alert("Please search and add at least 1 game");
-    }
+    // } else {
+    //   alert("Please search and add at least 1 game");
+    // }
   };
 
   // Editing  ❌
@@ -53,12 +54,22 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
   
   async function enrichBGGGame(id, originalName = "Unknown") {
     try {
-      const res = await fetch(`https://boardgamegeek.com/xmlapi2/thing?id=${id}&stats=1`);
+      // const res = await fetch(`https://boardgamegeek.com/xmlapi2/thing?id=${id}&stats=1`);
+      let res = await fetch(`/api/bgg/thing?id=${id}`);
+      if (res.status === 202) {
+      await new Promise(r => setTimeout(r, 1500));
+      res = await fetch(`/api/bgg/thing?id=${id}`);
+    }
+
+    if (!res.ok) return null;
       const xml = await res.text();
       const doc = new DOMParser().parseFromString(xml, "text/xml");
   
-      const item = doc.querySelector("item");
-      if (!item || item.getAttribute("type") === "boardgameexpansion") return null;
+      const item = Array.from(doc.querySelectorAll("item"))
+        .find(i => i.getAttribute("type") === "boardgame");
+
+      if (!item) return null;
+
   
       const nameNode = Array.from(doc.querySelectorAll("name")).find(
         (node) => node.getAttribute("type") === "primary"
@@ -74,38 +85,44 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
     }
   }
   
-  async function fetchBGGData(gameList) {
-    if (!Array.isArray(gameList)) {
-      console.error("fetchBGGData expected an array but got:", gameList);
-      return [];
-    }
+  // async function fetchBGGData(gameList) {
+  //   if (!Array.isArray(gameList)) {
+  //     console.error("fetchBGGData expected an array but got:", gameList);
+  //     return [];
+  //   }
   
-    const enriched = await Promise.all(
-      gameList.map((game) => enrichBGGGame(game.id, getGameName(game)))
-    );
-  
-    return enriched.filter(Boolean);
-  }
+  //  const enriched = [];
+  //     for (const item of gameList) {
+  //       const id = item.getAttribute("id");
+  //       const result = await enrichBGGGame(id);
+  //       if (result) enriched.push(result);
+  //     }
+  //   return enriched.filter(Boolean);
+  // }
   
   const handleSearch = async () => {
+    console.log("handleSearch called with searchTerm:", searchTerm);
+
     if (!searchTerm.trim()) return;
   
     try {
-      const res = await fetch(
-        `https://boardgamegeek.com/xmlapi2/search?query=${encodeURIComponent(searchTerm)}&type=boardgame`
-      );
+      const res = await fetch(`/api/bgg/search?q=${encodeURIComponent(searchTerm)}`);
+
       const xml = await res.text();
+      if (!res.ok) {
+        throw new Error(`Search failed: ${res.status}`);
+      }
   
       const parser = new DOMParser();
       const doc = parser.parseFromString(xml, "text/xml");
       const items = Array.from(doc.querySelectorAll("item")).slice(0, 5); // widen results
   
-      const enriched = await Promise.all(
-        items.map((item) => {
-          const id = item.getAttribute("id");
-          return enrichBGGGame(id);
-        })
-      );
+      const enriched = [];
+            for (const item of items) {
+        const id = item.getAttribute("id");
+        const result = await enrichBGGGame(id);
+        if (result) enriched.push(result);
+      }
   
       const filteredAndSorted = enriched
         .filter((game) => game && game.name)
@@ -124,6 +141,10 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
       }, 100);
     } catch (err) {
       alert("Something went wrong while searching for games. Please try again later.");
+    }
+    finally{
+    //  if (searchResults.length > 0)  
+      setSearchTerm("")
     }
   };
 
@@ -175,7 +196,6 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
                       handleSubmit();
                     } else {
                       handleSearch();
-                      setSearchTerm(""); // clear input after searching
                     }
                   }
                 }}         
@@ -230,7 +250,7 @@ export default function FavouriteGamesQ({ answers, handleChange, onNext, ...prop
   
       <div className="mt-6" >
         <Button onClick={handleSubmit} ref={nextButtonRef} 
-        disabled={favouriteGamesList.length < 1}
+        // disabled={favouriteGamesList.length < 1}
         >
           Next (or press Enter)
         </Button>

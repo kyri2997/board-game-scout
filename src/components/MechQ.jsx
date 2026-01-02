@@ -37,8 +37,7 @@ export default function MechQ(props) {
         ))}
       </ToggleGroup>
       <button
-      disabled={!props.selectedOption}
-      onClick={props.onNext}
+      disabled={!props.selectedOption || props.selectedOption.length === 0}      onClick={props.onNext}
       className= "next-btn"
       type="button"
       >Next (or press Enter)</button>

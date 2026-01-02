@@ -36,7 +36,7 @@ export default function CountQ(props) {
         ))}
       </ToggleGroup>
       <button
-      disabled={!props.selectedOption}
+      disabled={!props.selectedOption || props.selectedOption.length === 0}
       onClick={props.onNext}
       className= "next-btn"
       type="button"

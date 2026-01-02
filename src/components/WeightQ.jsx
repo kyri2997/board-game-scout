@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/Toggle";
 import useEnterSubmit from "@/components/hooks/useEnterSubmit"; 
 
+
 export default function WeightQ(props) {
   
   // enter on submit
@@ -19,8 +20,8 @@ export default function WeightQ(props) {
       <ToggleGroup
         type="single"
         value={props.selectedOption}
-        onValueChange={
-          (value) => props.handleChange(value, "weight")}
+        onValueChange={(value) => {
+          props.handleChange(value, "weight")}}
         variant="outline"
         aria-label="Experience level"
         className="toggle-group-container"
@@ -45,7 +46,7 @@ export default function WeightQ(props) {
       </ToggleGroup>
 
       <button
-        disabled={!props.selectedOption}
+        disabled={!props.selectedOption || props.selectedOption.length === 0}
         onClick={props.onNext}
         className="next-btn"
         type="button"
