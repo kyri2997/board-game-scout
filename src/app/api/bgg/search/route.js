@@ -4,8 +4,8 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q");
 
-  // console.log("🔍 /api/bgg/search called");
-  // console.log("➡️ query param:", query);
+  console.log("🔍 /api/bgg/search called");
+  console.log("➡️ query param:", query);
 
   if (!query) {
     return new Response("Missing query", { status: 400 });
@@ -20,7 +20,7 @@ export async function GET(request) {
     query
   )}&type=boardgame`;
 
-  // console.log("🌐 Fetching BGG URL:", url);
+  console.log("🌐 Fetching BGG URL:", url);
 
   let res;
   try {
@@ -37,11 +37,11 @@ export async function GET(request) {
     return new Response("Network error fetching BGG", { status: 502 });
   }
 
-  // console.log("⬅️ BGG status:", res.status);
-  // console.log("⬅️ BGG content-type:", res.headers.get("content-type"));
+  console.log("⬅️ BGG status:", res.status);
+  console.log("⬅️ BGG content-type:", res.headers.get("content-type"));
 
   const text = await res.text();
-  // console.log("⬅️ BGG response snippet (first 300 chars):\n", text.slice(0, 300));
+  console.log("⬅️ BGG response snippet (first 300 chars):\n", text.slice(0, 300));
 
   if (!res.ok) {
     console.error("❌ BGG returned non-OK status");
